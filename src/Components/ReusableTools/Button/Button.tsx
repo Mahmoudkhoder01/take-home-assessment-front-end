@@ -1,5 +1,5 @@
 import { FC } from "react";
-import calsses from "./Button.module.css";
+import classes from "./Button.module.css";
 
 interface ButtonProps {
   text: string;
@@ -8,7 +8,7 @@ interface ButtonProps {
 
 const Button: FC<ButtonProps> = ({ text, onClick }) => {
   return (
-    <button className={calsses.button} onClick={onClick}>
+    <button className={classes.button} onClick={onClick}>
       {text}
     </button>
   );

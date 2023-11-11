@@ -1,10 +1,13 @@
 import { ChangeEvent, useState } from "react";
+import classes from "./Register.module.css";
+import { registerUser } from "../../API/USERAPI";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+// import components
 import Box from "../../Components/Box/Box";
 import Input from "../../Components/ReusableTools/Input/Input";
-import classes from "./Register.module.css";
 import Button from "../../Components/ReusableTools/Button/Button";
-import { registerUser } from "../../API/API";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 
 export default function Register() {
   const queryClient = useQueryClient();

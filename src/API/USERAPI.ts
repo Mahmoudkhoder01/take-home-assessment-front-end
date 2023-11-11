@@ -8,27 +8,6 @@ export interface User {
   password: string;
 }
 
-export interface Todo {
-  id: number;
-  description: string;
-  priority: string;
-  userId: number;
-  date: string;
-  createdAt: string;
-  updatedAt: string;
-  User: {
-    id: number;
-    name: string;
-    email: string;
-    password: string;
-  };
-}
-
-export const fetchTodos = async (): Promise<Todo[]> => {
-  const response = await axios.get<Todo[]>(`${API_URL}todo`);
-  return response.data;
-};
-
 export const registerUser = async (user: User): Promise<User> => {
   try {
     const response = await axios.post<User>(`${API_URL}auth/register`, user);

@@ -1,6 +1,5 @@
 import React from "react";
 import classes from "./Input.module.css";
-import { error } from "console";
 
 interface InputProps {
   type: string;
