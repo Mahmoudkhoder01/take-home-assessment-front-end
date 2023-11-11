@@ -1,9 +1,12 @@
-import classes from "./Box.module.css"
+import { ReactNode } from "react";
+import classes from "./Box.module.css";
 
-export default function Box() {
-  return (
-    <div>
+type BoxProps = {
+  content: ReactNode;
+};
 
-    </div>
-  )
-}
+const Box: React.FC<BoxProps> = ({ content }) => {
+  return <div className={classes.box}>{content}</div>;
+};
+
+export default Box;
