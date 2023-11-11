@@ -3,6 +3,8 @@ import Box from "../../Components/Box/Box";
 import Input from "../../Components/ReusableTools/Input/Input";
 import classes from "./Register.module.css";
 import Button from "../../Components/ReusableTools/Button/Button";
+import { fetchTodos } from "../../API/API";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Register() {
   const [sbumit, setSubmit] = useState(false);
@@ -125,8 +127,6 @@ export default function Register() {
 
     try {
       setSubmit(true);
-
-      
     } catch (error) {}
   };
   return (
