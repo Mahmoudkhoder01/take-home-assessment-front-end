@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from "react";
 import classes from "./Register.module.css";
 import { registerUser } from "../../API/USERAPI";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 // import components
 import Box from "../../Components/Box/Box";
@@ -9,18 +10,41 @@ import Input from "../../Components/ReusableTools/Input/Input";
 import Button from "../../Components/ReusableTools/Button/Button";
 
 export default function Register() {
+  const navigate = useNavigate();
+
   const queryClient = useQueryClient();
+
   const {
     status,
     error: registerError,
     mutate,
   } = useMutation({
     mutationFn: registerUser,
-    onSuccess: (newUser) => {
-      // Save the user data to localStorage
-      localStorage.setItem("userInfo", JSON.stringify(newUser));
 
-      queryClient.setQueryData(["user"], newUser);
+    onSuccess: (newUser) => {
+      setData({
+        name: "",
+        email: "",
+        password: "",
+      });
+
+      setError({
+        name: "",
+        email: "",
+        password: "",
+        general: "",
+      });
+
+      localStorage.setItem("userInfo", JSON.stringify(newUser.result.userInfo));
+
+      localStorage.setItem("token", JSON.stringify(newUser.result.token));
+
+      navigate("/");
+
+      queryClient.setQueryData(
+        ["user", newUser.result.userInfo.id],
+        newUser.result
+      );
     },
   });
 
@@ -144,17 +168,6 @@ export default function Register() {
 
     try {
       mutate(data);
-
-      setData({
-        name: "",
-        email: "",
-        password: "",
-      });
-
-      setError((prevError) => ({
-        ...prevError,
-        general: "",
-      }));
     } catch (error) {
       setError((prevError) => ({
         ...prevError,
