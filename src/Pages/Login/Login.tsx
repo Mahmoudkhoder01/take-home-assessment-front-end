@@ -3,12 +3,33 @@ import Input from "../../Components/ReusableTools/Input/Input";
 import classes from "./Login.module.css";
 import Button from "../../Components/ReusableTools/Button/Button";
 import Box from "../../Components/Box/Box";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { loginUser } from "../../API/USERAPI";
 
 export default function Login() {
+  const queryClient = useQueryClient();
+
+  const {
+    mutate,
+  } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: (newUser) => {
+      setData({
+        email: "",
+        password: "",
+      });
+
+      setError("");
+
+      queryClient.setQueryData(["user"], newUser);
+    },
+  });
   const [data, setData] = useState({
     email: "",
     password: "",
   });
+
+  const [error, setError] = useState("");
 
   const handleInputChange = (field: string, value: string) => {
     setData((prevData) => ({
@@ -37,8 +58,14 @@ export default function Login() {
   ];
 
   const handleSubmit = () => {
+    if (!data.email && !data.password) {
+      setError("Please fill all feilds");
+      return;
+    }
     try {
+      mutate(data);
     } catch (error) {
+      setError(`${error}`);
       console.error("Login error:", error);
     }
   };
@@ -60,6 +87,7 @@ export default function Login() {
                 />
               ))}
             </div>
+            {error && <p className={classes.error}>{error}</p>}
             <Button text={"Login"} onClick={handleSubmit} />
           </>
         }

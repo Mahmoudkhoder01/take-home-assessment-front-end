@@ -1,3 +1,7 @@
 .InputsWrapper {
   margin-bottom: 25px;
 }
+
+.error{
+    color: red;
+}

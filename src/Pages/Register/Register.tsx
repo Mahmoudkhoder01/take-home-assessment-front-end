@@ -17,8 +17,18 @@ export default function Register() {
   } = useMutation({
     mutationFn: registerUser,
     onSuccess: (newUser) => {
-      // Save the user data to localStorage
-      localStorage.setItem("userInfo", JSON.stringify(newUser));
+      setData({
+        name: "",
+        email: "",
+        password: "",
+      });
+
+      setError({
+        name: "",
+        email: "",
+        password: "",
+        general: "",
+      });
 
       queryClient.setQueryData(["user"], newUser);
     },
@@ -144,17 +154,6 @@ export default function Register() {
 
     try {
       mutate(data);
-
-      setData({
-        name: "",
-        email: "",
-        password: "",
-      });
-
-      setError((prevError) => ({
-        ...prevError,
-        general: "",
-      }));
     } catch (error) {
       setError((prevError) => ({
         ...prevError,
