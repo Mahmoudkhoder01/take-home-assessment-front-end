@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from "react";
 import classes from "./Register.module.css";
 import { registerUser } from "../../API/USERAPI";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 // import components
 import Box from "../../Components/Box/Box";
@@ -9,13 +10,17 @@ import Input from "../../Components/ReusableTools/Input/Input";
 import Button from "../../Components/ReusableTools/Button/Button";
 
 export default function Register() {
+  const navigate = useNavigate();
+
   const queryClient = useQueryClient();
+
   const {
     status,
     error: registerError,
     mutate,
   } = useMutation({
     mutationFn: registerUser,
+
     onSuccess: (newUser) => {
       setData({
         name: "",
@@ -33,6 +38,8 @@ export default function Register() {
       localStorage.setItem("userInfo", JSON.stringify(newUser.result.userInfo));
 
       localStorage.setItem("token", JSON.stringify(newUser.result.token));
+
+      navigate("/");
 
       queryClient.setQueryData(
         ["user", newUser.result.userInfo.id],

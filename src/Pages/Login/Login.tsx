@@ -1,15 +1,20 @@
 import { ChangeEvent, useState } from "react";
-import Input from "../../Components/ReusableTools/Input/Input";
-import classes from "./Login.module.css";
-import Button from "../../Components/ReusableTools/Button/Button";
-import Box from "../../Components/Box/Box";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { loginUser } from "../../API/USERAPI";
+import { useNavigate } from "react-router-dom";
+import classes from "./Login.module.css";
+
+// import components
+import Box from "../../Components/Box/Box";
+import Input from "../../Components/ReusableTools/Input/Input";
+import Button from "../../Components/ReusableTools/Button/Button";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const queryClient = useQueryClient();
 
-  const { error: loginError, mutate } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: loginUser,
     onSuccess: (loginUser) => {
       setData({
@@ -23,9 +28,11 @@ export default function Login() {
         "userInfo",
         JSON.stringify(loginUser.result.userInfo)
       );
-      
+
       localStorage.setItem("token", JSON.stringify(loginUser.result.token));
-      
+
+      navigate("/");
+
       queryClient.setQueryData(
         ["user", loginUser.result.userInfo.id],
         loginUser.result
