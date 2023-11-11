@@ -1,0 +1,7 @@
+@import url("../ReusableTools/variables.css");
+
+.box {
+  background-color: var(--primary);
+  padding: 30px;
+  width: 500px;
+}

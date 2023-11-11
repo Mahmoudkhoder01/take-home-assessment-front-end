@@ -1,0 +1,19 @@
+@import url("../variables.css");
+
+.inputWrapper {
+  margin: 10px 0;
+}
+
+.input {
+  background-color: var(--secondary);
+  width: 100%;
+  border: 0;
+  outline: 0;
+  padding: 15px 10px;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+.error {
+  color: red;
+}

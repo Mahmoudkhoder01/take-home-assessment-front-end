@@ -1,0 +1,14 @@
+@import url("../variables.css");
+
+.button {
+  background-color: var(--secondary);
+  border: 0;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.button:hover {
+  background-color: #a09c9c;
+  color: white;
+  cursor: pointer;
+}
