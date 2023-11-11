@@ -3,3 +3,7 @@
   justify-content: center;
   align-items: center;
 }
+
+body > #root > div {
+  height: 100vh;
+}
