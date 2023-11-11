@@ -1,0 +1,13 @@
+.tasksWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.date {
+  margin: 20px 0;
+}
+
+.contentWrapper{
+    display: flex;
+    flex-direction: column-reverse;
+}

@@ -85,6 +85,18 @@ export interface UserData {
     name: string;
     email: string;
     password: string;
+    Todo: [
+      {
+        id: number,
+        description: string,
+        priority: string,
+        userId: number,
+        date: string,
+        complete: boolean,
+        createdAt: string,
+        updatedAt: string
+      }
+    ];
   };
 }
 
