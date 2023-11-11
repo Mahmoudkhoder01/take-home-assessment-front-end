@@ -9,11 +9,9 @@ import { loginUser } from "../../API/USERAPI";
 export default function Login() {
   const queryClient = useQueryClient();
 
-  const {
-    mutate,
-  } = useMutation({
+  const { error: loginError, mutate } = useMutation({
     mutationFn: loginUser,
-    onSuccess: (newUser) => {
+    onSuccess: (loginUser) => {
       setData({
         email: "",
         password: "",
@@ -21,9 +19,20 @@ export default function Login() {
 
       setError("");
 
-      queryClient.setQueryData(["user"], newUser);
+      localStorage.setItem(
+        "userInfo",
+        JSON.stringify(loginUser.result.userInfo)
+      );
+      
+      localStorage.setItem("token", JSON.stringify(loginUser.result.token));
+      
+      queryClient.setQueryData(
+        ["user", loginUser.result.userInfo.id],
+        loginUser.result
+      );
     },
   });
+
   const [data, setData] = useState({
     email: "",
     password: "",

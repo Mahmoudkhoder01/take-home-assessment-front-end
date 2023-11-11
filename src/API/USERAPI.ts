@@ -68,12 +68,37 @@ export const loginUser = async (
   } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response) {
       // Axios error with a response
-      console.error("Error registering user:", error.response.data.message);
+      console.error("Error login user:", error.response.data.message);
       throw new Error(error.response.data.message);
     } else {
       // Handle other types of errors, e.g., network errors
-      console.error("Error registering user:", error);
-      throw new Error("Registration failed");
+      console.error("Error login user:", error);
+      throw new Error("Login failed");
+    }
+  }
+};
+
+export interface UserData {
+  message: string;
+  result: {
+    id: number;
+    name: string;
+    email: string;
+    password: string;
+  };
+}
+
+export const getUserById = async (userId: number): Promise<UserData> => {
+  try {
+    const response = await axios.get<UserData>(`${API_URL}user/${userId}`);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      // Axios error with a response
+      throw new Error(error.response.data.message);
+    } else {
+      // Handle other types of errors, e.g., network errors
+      throw new Error("Failed to get user by ID");
     }
   }
 };

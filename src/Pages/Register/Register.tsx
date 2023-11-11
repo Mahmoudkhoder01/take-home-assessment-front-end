@@ -30,7 +30,14 @@ export default function Register() {
         general: "",
       });
 
-      queryClient.setQueryData(["user"], newUser);
+      localStorage.setItem("userInfo", JSON.stringify(newUser.result.userInfo));
+
+      localStorage.setItem("token", JSON.stringify(newUser.result.token));
+
+      queryClient.setQueryData(
+        ["user", newUser.result.userInfo.id],
+        newUser.result
+      );
     },
   });
 
