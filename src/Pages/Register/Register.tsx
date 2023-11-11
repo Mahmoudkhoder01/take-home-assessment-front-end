@@ -3,11 +3,23 @@ import Box from "../../Components/Box/Box";
 import Input from "../../Components/ReusableTools/Input/Input";
 import classes from "./Register.module.css";
 import Button from "../../Components/ReusableTools/Button/Button";
-import { fetchTodos } from "../../API/API";
-import { useQuery } from "@tanstack/react-query";
+import { registerUser } from "../../API/API";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function Register() {
-  const [sbumit, setSubmit] = useState(false);
+  const queryClient = useQueryClient();
+  const {
+    status,
+    error: registerError,
+    mutate,
+  } = useMutation({
+    mutationFn: registerUser,
+    onSuccess: (newUser) => {
+      queryClient.setQueryData(["user"], newUser);
+    },
+  });
+
+  const isPending = status === "pending";
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -126,8 +138,25 @@ export default function Register() {
     }
 
     try {
-      setSubmit(true);
-    } catch (error) {}
+      mutate(data);
+
+      setData({
+        name: "",
+        email: "",
+        password: "",
+      });
+
+      setError((prevError) => ({
+        ...prevError,
+        general: "",
+      }));
+    } catch (error) {
+      setError((prevError) => ({
+        ...prevError,
+        general: `${error}`,
+      }));
+      console.error("Registration error:", error);
+    }
   };
   return (
     <Box
@@ -146,8 +175,14 @@ export default function Register() {
               />
             ))}
           </div>
+          {registerError && (
+            <p className={classes.error}>{registerError.message}</p>
+          )}
           {error.general && <p className={classes.error}>{error.general}</p>}
-          <Button text="Register" onClick={handleSubmit} />
+          <Button
+            text={isPending ? "Submitting..." : "Register"}
+            onClick={handleSubmit}
+          />
         </>
       }
     />

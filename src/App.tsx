@@ -3,9 +3,6 @@ import Register from "./Pages/Register/Register";
 import Login from "./Pages/Login/Login";
 import Home from "./Pages/Home/Home";
 import "./App.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-const queryClient = new QueryClient();
 
 function App() {
   return (
