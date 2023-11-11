@@ -8,7 +8,6 @@ import Box from "../../Components/Box/Box";
 import Input from "../../Components/ReusableTools/Input/Input";
 import Button from "../../Components/ReusableTools/Button/Button";
 
-
 export default function Register() {
   const queryClient = useQueryClient();
   const {
@@ -18,6 +17,9 @@ export default function Register() {
   } = useMutation({
     mutationFn: registerUser,
     onSuccess: (newUser) => {
+      // Save the user data to localStorage
+      localStorage.setItem("userInfo", JSON.stringify(newUser));
+
       queryClient.setQueryData(["user"], newUser);
     },
   });
