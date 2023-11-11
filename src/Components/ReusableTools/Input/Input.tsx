@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./Input.module.css";
+import { error } from "console";
 
 interface InputProps {
   type: string;
@@ -7,6 +8,7 @@ interface InputProps {
   label: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  error: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -15,6 +17,7 @@ const Input: React.FC<InputProps> = ({
   label,
   value,
   onChange,
+  error,
 }) => {
   return (
     <div className={classes.inputWrapper}>
@@ -26,6 +29,7 @@ const Input: React.FC<InputProps> = ({
         value={value}
         onChange={onChange}
       />
+      {error && <p className={classes.error}>{error}</p>}
     </div>
   );
 };
