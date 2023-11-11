@@ -3,4 +3,5 @@
 .box {
   background-color: var(--primary);
   padding: 30px;
+  width: 500px;
 }

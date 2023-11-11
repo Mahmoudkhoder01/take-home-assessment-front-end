@@ -1,29 +1,32 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
 import classes from "./Input.module.css";
 
-type InputType = "text" | "date" | "number" | "email";
-
 interface InputProps {
-  type: InputType;
+  type: string;
   placeholder: string;
+  label: string;
   value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<InputProps> = ({
   type,
   placeholder,
+  label,
   value,
   onChange,
 }) => {
   return (
-    <input
-      className={classes.input}
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-    />
+    <div className={classes.inputWrapper}>
+      <label>{label}</label>
+      <input
+        className={classes.input}
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      />
+    </div>
   );
 };
 
