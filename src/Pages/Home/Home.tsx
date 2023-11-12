@@ -24,6 +24,7 @@ export default function Home() {
     queryFn: () => getUserById(userId),
   });
 
+  // Display a loading indicator while data is being fetched
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -69,7 +70,11 @@ export default function Home() {
           {todos.map((todo, todoIndex) => (
             <Box
               key={todoIndex}
-              content={<p>{todo.description}</p>}
+              content={
+                <div>
+                  <p>{todo.description}</p>
+                </div>
+              }
               adjustPadding
             />
           ))}

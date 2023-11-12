@@ -8,6 +8,7 @@ interface InputProps {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+  fullWidth?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -17,7 +18,10 @@ const Input: React.FC<InputProps> = ({
   value,
   onChange,
   error,
+  fullWidth,
 }) => {
+  const inputClassName = fullWidth ? classes.inputFullWidth : classes.input;
+
   return (
     <div className={classes.inputWrapper}>
       <label>{label}</label>
