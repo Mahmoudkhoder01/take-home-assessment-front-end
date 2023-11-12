@@ -60,11 +60,10 @@ const BackDroopBox: React.FC<CreateTodoPRops> = ({
   // Update the default date value when the component renders
   useEffect(() => {
     const currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0); // Set the time to midnight (00:00:00.000)
     const currentDateStr = currentDate.toISOString().split("T")[0];
     setData((prevData) => ({
       ...prevData,
-      date: currentDateStr, // Set the date to the current date
+      date: currentDateStr,
     }));
   }, []);
 
@@ -116,7 +115,7 @@ const BackDroopBox: React.FC<CreateTodoPRops> = ({
       }
 
       // Define a regex pattern for "YYYY-MM-DD" format
-      const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
+      const dateFormatRegex = /^\d{4}-\d{2}-\d{2}/;
 
       if (!data.date) {
         setError((prevError) => ({
@@ -146,6 +145,12 @@ const BackDroopBox: React.FC<CreateTodoPRops> = ({
           setError((prevError) => ({
             ...prevError,
             date: "Invalid date. Please enter a valid date.",
+          }));
+          errorFields.push("Date");
+        } else if (dateObject < new Date()) {
+          setError((prevError) => ({
+            ...prevError,
+            date: "Date should not be in the past.",
           }));
           errorFields.push("Date");
         }
