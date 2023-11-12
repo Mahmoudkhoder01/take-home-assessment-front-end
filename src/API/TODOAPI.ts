@@ -103,3 +103,15 @@ export const updateTodo = async (
     }
   }
 };
+
+export const deleteTodo = async (id: number): Promise<void> => {
+  try {
+    await axios.delete(`${API_URL}todo/${id}`);
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    } else {
+      throw new Error("Failed to delete todo");
+    }
+  }
+};
