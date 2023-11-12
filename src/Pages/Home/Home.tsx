@@ -37,6 +37,8 @@ export default function Home() {
 
   const [todoId, setTodoId] = useState(0);
 
+  const [showCompleted, setShowCompleted] = useState(false);
+
   const storedUser = localStorage.getItem("userInfo");
 
   const userIdObject = storedUser && JSON.parse(storedUser);
@@ -79,7 +81,15 @@ export default function Home() {
       todosByDate[dateLabel] = [];
     }
 
-    todosByDate[dateLabel].push(todo);
+    if (showCompleted) {
+      // Show completed tasks
+      if (todo.completed) {
+        todosByDate[dateLabel].push(todo);
+      }
+    } else {
+      // Show active tasks
+      todosByDate[dateLabel].push(todo);
+    }
   });
 
   const handleOpenEdit = (todoData: object, id: number) => {
@@ -152,11 +162,24 @@ export default function Home() {
           ))
         )}
       </div>
-      <div
-        className={classes.bottomIconWrapper}
-        onClick={() => setIsOpen(true)}
-      >
-        <img src={plusIcon} alt="plus-icon" className={classes.bottomIcon} />
+      <div className={classes.bottomIconWrapper}>
+        <div className={classes.bottomIcon} onClick={() => setIsOpen(true)}>
+          <img
+            src={plusIcon}
+            alt="plus-icon"
+            className={classes.bottomIconImage}
+          />
+        </div>
+        <div
+          className={classes.bottomIcon}
+          onClick={() => setShowCompleted(!showCompleted)}
+        >
+          <img
+            src={completedIcon}
+            alt="completed-icon"
+            className={classes.bottomIconImage}
+          />
+        </div>
       </div>
       {isCreateTodo && (
         <TodoForm
