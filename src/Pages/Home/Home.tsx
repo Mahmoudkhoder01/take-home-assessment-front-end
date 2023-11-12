@@ -9,6 +9,9 @@ import plusIcon from "../../ICONS/plus.png";
 import editIcon from "../../ICONS/pencil.png";
 import deleteIcon from "../../ICONS/bin.png";
 import completedIcon from "../../ICONS/check-mark.png";
+import flagIcon from "../../ICONS/flag.png";
+
+// import components
 import CreateTodo from "../../Components/CreateTodo/CreateTodo";
 import DeleteTodo from "../../Components/DeleteTodo/DeleteTodo";
 
@@ -81,7 +84,7 @@ export default function Home() {
   };
 
   return (
-    <div style={{height: "100vh"}}>
+    <div style={{ height: "100vh" }}>
       <div className={classes.contentWrapper}>
         {Object.keys(todosByDate).length === 0 ? (
           <div className={classes.noData}>No todos yet.</div>
@@ -96,15 +99,23 @@ export default function Home() {
                       <div className={classes.todoWrapper}>
                         <p>{todo.description}</p>
                         <div>
-                          {todo.completed && (
-                            <div className={classes.topIcon}>
+                          <div className={classes.topIcon}>
+                            {todo.completed && (
                               <img
                                 src={completedIcon}
                                 alt="completed-icon"
                                 className={`${classes.icon} ${classes.completedIcon}`}
                               />
+                            )}
+                            <img
+                              src={flagIcon}
+                              alt="flag-icon"
+                              className={`${classes.icon} ${classes.flagIcon}`}
+                            />
+                            <div className={classes.priorityText}>
+                                {todo.priority}
                             </div>
-                          )}
+                          </div>
                           <div>
                             <img
                               src={editIcon}
