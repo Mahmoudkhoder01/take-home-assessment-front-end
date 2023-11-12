@@ -12,7 +12,7 @@ import completedIcon from "../../ICONS/check-mark.png";
 import flagIcon from "../../ICONS/flag.png";
 
 // import components
-import CreateTodo from "../../Components/CreateTodo/CreateTodo";
+import TodoForm, { TodoData } from "../../Components/TodoForm/TodoForm";
 import DeleteTodo from "../../Components/DeleteTodo/DeleteTodo";
 
 interface Todo {
@@ -27,9 +27,13 @@ interface Todo {
 }
 
 export default function Home() {
-  const [isCreateTodo, setIscreateTodo] = useState(false);
+  const [isCreateTodo, setIsOpen] = useState(false);
+
+  const [isEditTodo, setIsEditTodo] = useState(false);
 
   const [isDeleteTodo, setIsDeleteTodo] = useState(false);
+
+  const [todoData, setTodoData] = useState({});
 
   const [todoId, setTodoId] = useState(0);
 
@@ -78,6 +82,13 @@ export default function Home() {
     todosByDate[dateLabel].push(todo);
   });
 
+  const handleOpenEdit = (todoData: object, id: number) => {
+    setIsOpen(true);
+    setIsEditTodo(true);
+    setTodoData(todoData);
+    setTodoId(id);
+  };
+
   const handleOpenDelete = (id: number) => {
     setIsDeleteTodo(true);
     setTodoId(id);
@@ -113,7 +124,7 @@ export default function Home() {
                               className={`${classes.icon} ${classes.flagIcon}`}
                             />
                             <div className={classes.priorityText}>
-                                {todo.priority}
+                              {todo.priority}
                             </div>
                           </div>
                           <div>
@@ -121,6 +132,7 @@ export default function Home() {
                               src={editIcon}
                               alt="edit-icon"
                               className={`${classes.icon} ${classes.editIcon}`}
+                              onClick={() => handleOpenEdit(todo, todo.id)}
                             />
                             <img
                               src={deleteIcon}
@@ -142,15 +154,19 @@ export default function Home() {
       </div>
       <div
         className={classes.bottomIconWrapper}
-        onClick={() => setIscreateTodo(true)}
+        onClick={() => setIsOpen(true)}
       >
         <img src={plusIcon} alt="plus-icon" className={classes.bottomIcon} />
       </div>
       {isCreateTodo && (
-        <CreateTodo
-          setIscreateTodo={setIscreateTodo}
+        <TodoForm
+          setIsOpen={setIsOpen}
           isCreateTodo={isCreateTodo}
           reFetch={refetch}
+          dataObject={todoData as TodoData}
+          setIsEditTodo={setIsEditTodo}
+          todoId={todoId}
+          isEditTodo={isEditTodo}
         />
       )}
       {isDeleteTodo && (

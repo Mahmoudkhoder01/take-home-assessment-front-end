@@ -79,21 +79,20 @@ export interface EditTodoResponse {
 }
 
 export interface EditTodoRequest {
-  description: string;
-  priority: string;
-  date: string;
-  completed?: boolean;
+  id: number;
+  todo: {
+    description: string;
+    priority: string;
+    date: string;
+    completed?: boolean;
+  };
 }
 
 export const updateTodo = async (
-  id: number,
   todo: EditTodoRequest
 ): Promise<EditTodoResponse> => {
   try {
-    const response = await axios.put<EditTodoResponse>(
-      `${API_URL}todo/${id}`,
-      todo
-    );
+    const response = await axios.put<EditTodoResponse>(`${API_URL}todo`, todo);
     return response.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response) {
