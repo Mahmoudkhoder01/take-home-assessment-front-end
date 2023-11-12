@@ -1,4 +1,4 @@
-import { useState, FC, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Box from "../Box/Box";
 import Input from "../ReusableTools/Input/Input";
 import classes from "./CreateTodo.module.css";

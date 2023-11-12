@@ -81,10 +81,10 @@ export default function Home() {
   };
 
   return (
-    <div className={classes.content}>
+    <div style={{height: "100vh"}}>
       <div className={classes.contentWrapper}>
         {Object.keys(todosByDate).length === 0 ? (
-          <div>No todos yet.</div>
+          <div className={classes.noData}>No todos yet.</div>
         ) : (
           Object.entries(todosByDate).map(([date, todos], index) => (
             <div className={classes.tasksWrapper} key={index}>
