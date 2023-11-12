@@ -75,59 +75,59 @@ export default function Home() {
     todosByDate[dateLabel].push(todo);
   });
 
-  if (Object.keys(todosByDate).length === 0) {
-    return <div>No todos yet.</div>;
-  }
-
   const handleOpenDelete = (id: number) => {
     setIsDeleteTodo(true);
     setTodoId(id);
   };
 
   return (
-    <div style={{ height: "100vh" }}>
+    <div style={{height: "100vh"}}>
       <div className={classes.contentWrapper}>
-        {Object.entries(todosByDate).map(([date, todos], index) => (
-          <div className={classes.tasksWrapper} key={index}>
-            <div className={classes.date}>{date}</div>
-            {todos.map((todo, todoIndex) => (
-              <div key={todoIndex}>
-                <Box
-                  content={
-                    <div className={classes.todoWrapper}>
-                      <p>{todo.description}</p>
-                      <div>
-                        {todo.completed && (
-                          <div className={classes.topIcon}>
+        {Object.keys(todosByDate).length === 0 ? (
+          <div className={classes.noData}>No todos yet.</div>
+        ) : (
+          Object.entries(todosByDate).map(([date, todos], index) => (
+            <div className={classes.tasksWrapper} key={index}>
+              <div className={classes.date}>{date}</div>
+              {todos.map((todo, todoIndex) => (
+                <div key={todoIndex}>
+                  <Box
+                    content={
+                      <div className={classes.todoWrapper}>
+                        <p>{todo.description}</p>
+                        <div>
+                          {todo.completed && (
+                            <div className={classes.topIcon}>
+                              <img
+                                src={completedIcon}
+                                alt="completed-icon"
+                                className={`${classes.icon} ${classes.completedIcon}`}
+                              />
+                            </div>
+                          )}
+                          <div>
                             <img
-                              src={completedIcon}
-                              alt="completed-icon"
-                              className={`${classes.icon} ${classes.completedIcon}`}
+                              src={editIcon}
+                              alt="edit-icon"
+                              className={`${classes.icon} ${classes.editIcon}`}
+                            />
+                            <img
+                              src={deleteIcon}
+                              alt="delete-icon"
+                              className={`${classes.icon} ${classes.deleteIcon}`}
+                              onClick={() => handleOpenDelete(todo.id)}
                             />
                           </div>
-                        )}
-                        <div>
-                          <img
-                            src={editIcon}
-                            alt="edit-icon"
-                            className={`${classes.icon} ${classes.editIcon}`}
-                          />
-                          <img
-                            src={deleteIcon}
-                            alt="delete-icon"
-                            className={`${classes.icon} ${classes.deleteIcon}`}
-                            onClick={() => handleOpenDelete(todo.id)}
-                          />
                         </div>
                       </div>
-                    </div>
-                  }
-                  adjustPadding
-                />
-              </div>
-            ))}
-          </div>
-        ))}
+                    }
+                    adjustPadding
+                  />
+                </div>
+              ))}
+            </div>
+          ))
+        )}
       </div>
       <div
         className={classes.bottomIconWrapper}
