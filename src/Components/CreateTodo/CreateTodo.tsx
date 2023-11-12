@@ -1,22 +1,22 @@
 import { useState, FC } from "react";
 import Box from "../Box/Box";
 import Input from "../ReusableTools/Input/Input";
-import classes from "./BackDropBox.module.css";
+import classes from "./CreateTodo.module.css";
 import Button from "../ReusableTools/Button/Button";
 import { createTodo } from "../../API/TODOAPI";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import closeIcon from "../../ICONS/x-mark.png";
 
-interface BackDropBoxProps {
-  isBackdropOpen: boolean;
-  setIsBackdropOpen: (value: boolean) => void;
+interface CreateTodoPRops {
+  isCreateTodo: boolean;
+  setIscreateTodo: (value: boolean) => void;
   reFetch: () => void;
 }
 
-const BackDroopBox: React.FC<BackDropBoxProps> = ({
-  isBackdropOpen,
-  setIsBackdropOpen,
+const BackDroopBox: React.FC<CreateTodoPRops> = ({
+  isCreateTodo,
+  setIscreateTodo,
   reFetch,
 }) => {
   const storedUserInfo = localStorage.getItem("userInfo");
@@ -164,7 +164,7 @@ const BackDroopBox: React.FC<BackDropBoxProps> = ({
 
       mutate(data);
 
-      setIsBackdropOpen(false);
+      setIscreateTodo(false);
     } catch (error) {
       console.error("Registration error:", error);
     }
@@ -172,13 +172,13 @@ const BackDroopBox: React.FC<BackDropBoxProps> = ({
 
   return (
     <>
-      {isBackdropOpen && (
+      {isCreateTodo && (
         <div>
           <img
             src={closeIcon}
             alt="close-icon"
             className={classes.closeIcon}
-            onClick={() => setIsBackdropOpen(false)}
+            onClick={() => setIscreateTodo(false)}
           />
           <div className={classes.backDrop}>
             <>

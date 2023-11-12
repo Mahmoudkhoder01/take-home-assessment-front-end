@@ -87,7 +87,7 @@ export interface EditTodoRequest {
 
 export const updateTodo = async (
   id: number,
-  todo: EditTodoRequest,
+  todo: EditTodoRequest
 ): Promise<EditTodoResponse> => {
   try {
     const response = await axios.put<EditTodoResponse>(
@@ -100,6 +100,18 @@ export const updateTodo = async (
       throw new Error(error.response.data.message);
     } else {
       throw new Error("Failed to update todo");
+    }
+  }
+};
+
+export const deleteTodo = async (id: number): Promise<void> => {
+  try {
+    await axios.delete(`${API_URL}todo/${id}`);
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    } else {
+      throw new Error("Failed to delete todo");
     }
   }
 };
