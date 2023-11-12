@@ -6,7 +6,26 @@
   width: 500px;
 }
 
-.adjustedPadding{
+.adjustedPadding {
   padding: 5px 10px;
   margin: 10px 0;
+}
+
+@media (max-width: 767px) {
+  .box {
+    margin: 20px;
+    width: 400px;
+  }
+}
+
+@media (max-width: 500px) {
+  .box {
+    width: 300px;
+  }
+}
+
+@media (max-width: 360px) {
+  .box {
+    width: 250px;
+  }
 }
