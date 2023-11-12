@@ -1,0 +1,70 @@
+@import url("../../Components/ReusableTools/variables.css");
+
+.tasksWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.date {
+  margin: 20px 0;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.todoWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bottomIconWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary);
+  border-radius: 50%;
+  padding: 15px;
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  cursor: pointer;
+}
+
+.bottomIconWrapper:hover {
+  background-color: var(--secondary);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.deleteIcon:hover {
+  filter: invert(34%) sepia(79%) saturate(7424%) hue-rotate(354deg)
+    brightness(93%) contrast(133%);
+}
+
+.editIcon:hover {
+  filter: invert(66%) sepia(58%) saturate(6536%) hue-rotate(162deg)
+    brightness(96%) contrast(101%);
+}
+
+.bottomIcon {
+  width: 40px;
+  height: 40px;
+}
+
+.topIcon {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 10px;
+}
+.completedIcon {
+  filter: invert(56%) sepia(93%) saturate(2641%) hue-rotate(82deg)
+    brightness(118%) contrast(123%);
+}

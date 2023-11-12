@@ -16,6 +16,7 @@ interface DataResponse {
       id: number;
       name: string;
       email: string;
+      password: string;
     };
   };
 }
@@ -85,6 +86,18 @@ export interface UserData {
     name: string;
     email: string;
     password: string;
+    Todo: [
+      {
+        id: number;
+        description: string;
+        priority: string;
+        userId: number;
+        date: string;
+        completed: boolean;
+        createdAt: string;
+        updatedAt: string;
+      }
+    ];
   };
 }
 

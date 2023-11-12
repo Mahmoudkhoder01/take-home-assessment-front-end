@@ -5,3 +5,8 @@
   padding: 30px;
   width: 500px;
 }
+
+.adjustedPadding{
+  padding: 5px 10px;
+  margin: 10px 0;
+}

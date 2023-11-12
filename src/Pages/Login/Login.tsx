@@ -103,7 +103,7 @@ export default function Login() {
                 />
               ))}
             </div>
-            {error && <p className={classes.error}>{error}</p>}
+            {error && <p className="error">{error}</p>}
             <Button text={"Login"} onClick={handleSubmit} />
           </>
         }
