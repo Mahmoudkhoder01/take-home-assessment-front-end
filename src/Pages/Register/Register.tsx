@@ -49,6 +49,7 @@ export default function Register() {
   });
 
   const isPending = status === "pending";
+
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -176,33 +177,36 @@ export default function Register() {
       console.error("Registration error:", error);
     }
   };
+
   return (
-    <Box
-      content={
-        <>
-          <div className={classes.InputsWrapper}>
-            {inputFields.map((field, index) => (
-              <Input
-                label={field.label}
-                key={index}
-                type={field.type}
-                placeholder={field.placeholder}
-                onChange={field.onChange}
-                value={field.value}
-                error={field.error}
-              />
-            ))}
-          </div>
-          {registerError && (
-            <p className={classes.error}>{registerError.message}</p>
-          )}
-          {error.general && <p className={classes.error}>{error.general}</p>}
-          <Button
-            text={isPending ? "Submitting..." : "Register"}
-            onClick={handleSubmit}
-          />
-        </>
-      }
-    />
+    <div className="content">
+      <Box
+        content={
+          <>
+            <div className={classes.InputsWrapper}>
+              {inputFields.map((field, index) => (
+                <Input
+                  key={index}
+                  label={field.label}
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  onChange={field.onChange}
+                  value={field.value}
+                  error={field.error}
+                />
+              ))}
+            </div>
+            {registerError && (
+              <p className={classes.error}>{registerError.message}</p>
+            )}
+            {error.general && <p className="error">{error.general}</p>}
+            <Button
+              text={isPending ? "Submitting..." : "Register"}
+              onClick={handleSubmit}
+            />
+          </>
+        }
+      />
+    </div>
   );
 }
