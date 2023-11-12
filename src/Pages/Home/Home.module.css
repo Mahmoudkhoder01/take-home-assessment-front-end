@@ -94,6 +94,10 @@
   background-color: var(--secondary);
   padding: 5px;
   left: 110%;
+  @media (max-width: 567px) {
+    left: auto; /* Reset the left property */
+    right: 30px; /* Set a right position on smaller screens */
+  }
 }
 
 .completedIcon {
