@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { getUserById } from "../../API/USERAPI";
 import Box from "../../Components/Box/Box";
 import classes from "./Home.module.css";
@@ -8,6 +9,7 @@ import plusIcon from "../../ICONS/plus.png";
 import editIcon from "../../ICONS/pencil.png";
 import deleteIcon from "../../ICONS/bin.png";
 import completedIcon from "../../ICONS/check-mark.png";
+import BackDropBox from "../../Components/BackDropBox/BackDropBox";
 
 interface Todo {
   id: number;
@@ -21,8 +23,12 @@ interface Todo {
 }
 
 export default function Home() {
+  const [isBackdropOpen, setIsBackdropOpen] = useState(false);
+
   const storedUser = localStorage.getItem("userInfo");
+
   const userIdObject = storedUser && JSON.parse(storedUser);
+
   const userId = userIdObject && userIdObject.id;
 
   const { data, isLoading } = useQuery({
@@ -111,9 +117,16 @@ export default function Home() {
           </div>
         ))}
       </div>
-      <div className={classes.bottomIconWrapper}>
+      <div
+        className={classes.bottomIconWrapper}
+        onClick={() => setIsBackdropOpen(true)}
+      >
         <img src={plusIcon} alt="plus-icon" className={classes.bottomIcon} />
       </div>
+      <BackDropBox
+        setIsBackdropOpen={setIsBackdropOpen}
+        isBackdropOpen={isBackdropOpen}
+      />
     </>
   );
 }
