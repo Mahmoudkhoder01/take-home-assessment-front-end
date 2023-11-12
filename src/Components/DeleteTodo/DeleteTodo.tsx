@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from "react";
 import Box from "../Box/Box";
 import Button from "../ReusableTools/Button/Button";
 import classes from "./DeleteTodo.module.css";
-import closeIcon from "../../ICONS/x-mark.png";
 import { deleteTodo } from "../../API/TODOAPI";
 
 interface DeleteTodoProps {
@@ -35,12 +34,6 @@ const DeleteTodo: FC<DeleteTodoProps> = ({
 
   return (
     <>
-      <img
-        src={closeIcon}
-        alt="close-icon"
-        className={classes.closeIcon}
-        onClick={handleClose}
-      />
       <div className={classes.backDrop}>
         <Box
           content={
