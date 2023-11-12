@@ -91,9 +91,8 @@ export default function Home() {
           <div className={classes.tasksWrapper} key={index}>
             <div className={classes.date}>{date}</div>
             {todos.map((todo, todoIndex) => (
-              <>
+              <div key={todoIndex}>
                 <Box
-                  key={todoIndex}
                   content={
                     <div className={classes.todoWrapper}>
                       <p>{todo.description}</p>
@@ -125,7 +124,7 @@ export default function Home() {
                   }
                   adjustPadding
                 />
-              </>
+              </div>
             ))}
           </div>
         ))}
