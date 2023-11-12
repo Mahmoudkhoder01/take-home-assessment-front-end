@@ -7,6 +7,7 @@ import { createTodo, updateTodo } from "../../API/TODOAPI";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import closeIcon from "../../ICONS/x-mark.png";
+import Checkbox from "../CheckBox/CheckBox";
 
 export interface TodoData {
   id: number;
@@ -104,6 +105,8 @@ const TodoForm: React.FC<TodoFormProps> = ({
       queryClient.setQueryData(["todo", editTodo], editTodo);
     },
   });
+
+  const [completed, setCompleted] = useState(dataObject?.completed || false);
 
   const [data, setData] = useState({
     description: "",
@@ -228,7 +231,7 @@ const TodoForm: React.FC<TodoFormProps> = ({
             description: data.description,
             priority: data.priority,
             date: data.date,
-            completed: true,
+            completed: completed,
           },
         };
         updateTodoFn(editData);
@@ -249,6 +252,9 @@ const TodoForm: React.FC<TodoFormProps> = ({
     setIsEditTodo?.(false);
   };
 
+  const handleCheckboxChange = (isChecked: boolean) => {
+    setCompleted(isChecked);
+  };
   return (
     <>
       {isCreateTodo && (
@@ -296,6 +302,13 @@ const TodoForm: React.FC<TodoFormProps> = ({
                         error={error.priority}
                       />
                     </div>
+                    {isEditTodo && (
+                      <Checkbox
+                        label="Completed"
+                        checked={completed}
+                        onChange={handleCheckboxChange}
+                      />
+                    )}
                     {error.general && <p className="error">{error.general}</p>}
                     <Button
                       text={isEditTodo ? "Edit" : "Create"}
