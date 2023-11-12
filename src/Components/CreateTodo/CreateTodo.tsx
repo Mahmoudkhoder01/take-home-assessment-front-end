@@ -3,25 +3,56 @@ import Box from "../Box/Box";
 import Input from "../ReusableTools/Input/Input";
 import classes from "./CreateTodo.module.css";
 import Button from "../ReusableTools/Button/Button";
-import { createTodo } from "../../API/TODOAPI";
+import { createTodo, updateTodo } from "../../API/TODOAPI";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import closeIcon from "../../ICONS/x-mark.png";
 
-interface CreateTodoPRops {
-  isCreateTodo: boolean;
-  setIscreateTodo: (value: boolean) => void;
-  reFetch: () => void;
+export interface TodoData {
+  id: number;
+  description: string;
+  priority: string;
+  date: string;
+  completed: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
-const BackDroopBox: React.FC<CreateTodoPRops> = ({
+interface CreateTodoPRops {
+  isCreateTodo: boolean;
+  setIsOpen: (value: boolean) => void;
+  reFetch: () => void;
+  setIsEditTodo?: (value: boolean) => void;
+  dataObject?: TodoData;
+  isEditTodo?: boolean;
+  todoId?: number;
+}
+
+const CreateTodoBox: React.FC<CreateTodoPRops> = ({
   isCreateTodo,
-  setIscreateTodo,
+  setIsOpen,
   reFetch,
+  isEditTodo,
+  setIsEditTodo,
+  dataObject,
+  todoId,
 }) => {
   const storedUserInfo = localStorage.getItem("userInfo");
 
   const userId = storedUserInfo && JSON.parse(storedUserInfo);
+
+  useEffect(() => {
+    if (isEditTodo && dataObject) {
+      // If in edit mode and dataObject is provided, set the data state
+      setData({
+        description: dataObject.description || "",
+        priority: dataObject.priority || "",
+        userId: "",
+        date: dataObject.date || "",
+        completed: dataObject.completed || false,
+      });
+    }
+  }, [isEditTodo, dataObject]);
 
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
@@ -46,6 +77,31 @@ const BackDroopBox: React.FC<CreateTodoPRops> = ({
       reFetch();
 
       queryClient.setQueryData(["todo", newTodo], newTodo.result);
+    },
+  });
+
+  const { mutate: updateTodoFn } = useMutation({
+    mutationFn: updateTodo,
+
+    onSuccess: (editTodo) => {
+      setData({
+        description: "",
+        priority: "",
+        userId: userId.id,
+        date: "",
+        completed: false,
+      });
+
+      setError({
+        description: "",
+        priority: "",
+        date: "",
+        general: "",
+      });
+
+      reFetch();
+
+      queryClient.setQueryData(["todo", editTodo], editTodo);
     },
   });
 
@@ -130,24 +186,11 @@ const BackDroopBox: React.FC<CreateTodoPRops> = ({
         }));
         errorFields.push("Date");
       } else {
-        const dateParts = data.date.split("-");
-        const year = parseInt(dateParts[0], 10);
-        const month = parseInt(dateParts[1], 10);
-        const day = parseInt(dateParts[2], 10);
-        const dateObject = new Date(year, month - 1, day);
+        const inputDate = new Date(data.date);
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
 
-        if (
-          isNaN(dateObject.getTime()) ||
-          dateObject.getDate() !== day ||
-          dateObject.getMonth() !== month - 1 ||
-          dateObject.getFullYear() !== year
-        ) {
-          setError((prevError) => ({
-            ...prevError,
-            date: "Invalid date. Please enter a valid date.",
-          }));
-          errorFields.push("Date");
-        } else if (dateObject < new Date()) {
+        if (inputDate.getTime() < currentDate.getTime()) {
           setError((prevError) => ({
             ...prevError,
             date: "Date should not be in the past.",
@@ -178,12 +221,32 @@ const BackDroopBox: React.FC<CreateTodoPRops> = ({
         return;
       }
 
+      if (isEditTodo && todoId !== undefined) {
+        const editData = {
+          id: todoId,
+          todo: {
+            description: data.description,
+            priority: data.priority,
+            date: data.date,
+            completed: true,
+          },
+        };
+        updateTodoFn(editData);
+        setIsOpen(false);
+        return;
+      }
+
       mutate(data);
 
-      setIscreateTodo(false);
+      setIsOpen(false);
     } catch (error) {
       console.error("Registration error:", error);
     }
+  };
+
+  const handleCloseForm = () => {
+    setIsOpen(false);
+    setIsEditTodo?.(false);
   };
 
   return (
@@ -194,7 +257,7 @@ const BackDroopBox: React.FC<CreateTodoPRops> = ({
             src={closeIcon}
             alt="close-icon"
             className={classes.closeIcon}
-            onClick={() => setIscreateTodo(false)}
+            onClick={handleCloseForm}
           />
           <div className={classes.backDrop}>
             <>
@@ -234,7 +297,10 @@ const BackDroopBox: React.FC<CreateTodoPRops> = ({
                       />
                     </div>
                     {error.general && <p className="error">{error.general}</p>}
-                    <Button text="Create" onClick={handleSubmit} />
+                    <Button
+                      text={isEditTodo ? "Edit" : "Create"}
+                      onClick={handleSubmit}
+                    />
                   </>
                 }
               />
@@ -246,4 +312,4 @@ const BackDroopBox: React.FC<CreateTodoPRops> = ({
   );
 };
 
-export default BackDroopBox;
+export default CreateTodoBox;
