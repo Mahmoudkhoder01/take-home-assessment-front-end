@@ -1,4 +1,4 @@
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 import Box from "../Box/Box";
 import Input from "../ReusableTools/Input/Input";
 import classes from "./CreateTodo.module.css";
@@ -56,6 +56,17 @@ const BackDroopBox: React.FC<CreateTodoPRops> = ({
     date: "",
     completed: false,
   });
+
+  // Update the default date value when the component renders
+  useEffect(() => {
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0); // Set the time to midnight (00:00:00.000)
+    const currentDateStr = currentDate.toISOString().split("T")[0];
+    setData((prevData) => ({
+      ...prevData,
+      date: currentDateStr, // Set the date to the current date
+    }));
+  }, []);
 
   const [error, setError] = useState({
     description: "",
