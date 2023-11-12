@@ -118,12 +118,14 @@ const TodoForm: React.FC<TodoFormProps> = ({
 
   // Update the default date value when the component renders
   useEffect(() => {
-    const currentDate = new Date();
-    const currentDateStr = currentDate.toISOString().split("T")[0];
-    setData((prevData) => ({
-      ...prevData,
-      date: currentDateStr,
-    }));
+    if (!isEditTodo) {
+      const currentDate = new Date();
+      const currentDateStr = currentDate.toISOString().split("T")[0];
+      setData((prevData) => ({
+        ...prevData,
+        date: currentDateStr,
+      }));
+    }
   }, []);
 
   const [error, setError] = useState({
@@ -299,7 +301,7 @@ const TodoForm: React.FC<TodoFormProps> = ({
                     />
                     <div className={classes.inlineInputs}>
                       <Input
-                        type="text"
+                        type="date"
                         label="Date"
                         onChange={(e) =>
                           handleInputChange("date", e.target.value)
