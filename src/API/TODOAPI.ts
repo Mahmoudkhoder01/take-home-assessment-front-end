@@ -2,6 +2,10 @@ import axios from "axios";
 
 const API_URL = "http://localhost:5000/";
 
+const token = localStorage.getItem("token");
+
+const storedToken = token && JSON.parse(token);
+
 export interface Todo {
   id: number;
   description: string;
@@ -19,7 +23,11 @@ export interface Todo {
 }
 
 export const fetchTodos = async (): Promise<Todo[]> => {
-  const response = await axios.get<Todo[]>(`${API_URL}todo`);
+  const response = await axios.get<Todo[]>(`${API_URL}todo`, {
+    headers: {
+      Authorization: `Bearer ${storedToken}`,
+    },
+  });
   return response.data;
 };
 
@@ -51,7 +59,12 @@ export const createTodo = async (
   try {
     const response = await axios.post<CreateTodoResponse>(
       `${API_URL}todo`,
-      todo
+      todo,
+      {
+        headers: {
+          Authorization: `Bearer ${storedToken}`,
+        },
+      }
     );
 
     return response.data;
@@ -92,7 +105,11 @@ export const updateTodo = async (
   todo: EditTodoRequest
 ): Promise<EditTodoResponse> => {
   try {
-    const response = await axios.put<EditTodoResponse>(`${API_URL}todo`, todo);
+    const response = await axios.put<EditTodoResponse>(`${API_URL}todo`, todo, {
+      headers: {
+        Authorization: `Bearer ${storedToken}`,
+      },
+    });
     return response.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response) {
@@ -105,7 +122,11 @@ export const updateTodo = async (
 
 export const deleteTodo = async (id: number): Promise<void> => {
   try {
-    await axios.delete(`${API_URL}todo/${id}`);
+    await axios.delete(`${API_URL}todo/${id}`, {
+      headers: {
+        Authorization: `Bearer ${storedToken}`,
+      },
+    });
   } catch (error: unknown) {
     if (axios.isAxiosError(error) && error.response) {
       throw new Error(error.response.data.message);

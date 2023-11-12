@@ -225,6 +225,19 @@ const TodoForm: React.FC<TodoFormProps> = ({
       }
 
       if (isEditTodo && todoId !== undefined) {
+        if (
+          data.description === dataObject?.description &&
+          data.priority === dataObject?.priority &&
+          data.date === dataObject?.date &&
+          completed === dataObject?.completed
+        ) {
+          setError((prevError) => ({
+            ...prevError,
+            general: "No changes were made",
+          }));
+          return;
+        }
+
         const editData = {
           id: todoId,
           todo: {
@@ -234,7 +247,11 @@ const TodoForm: React.FC<TodoFormProps> = ({
             completed: completed,
           },
         };
+
         updateTodoFn(editData);
+
+        setIsEditTodo?.(false);
+
         setIsOpen(false);
         return;
       }
