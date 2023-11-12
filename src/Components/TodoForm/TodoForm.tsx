@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Box from "../Box/Box";
 import Input from "../ReusableTools/Input/Input";
-import classes from "./CreateTodo.module.css";
+import classes from "./TodoForm.module.css";
 import Button from "../ReusableTools/Button/Button";
 import { createTodo, updateTodo } from "../../API/TODOAPI";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -18,7 +18,7 @@ export interface TodoData {
   updatedAt: string;
 }
 
-interface CreateTodoPRops {
+interface TodoFormProps {
   isCreateTodo: boolean;
   setIsOpen: (value: boolean) => void;
   reFetch: () => void;
@@ -28,7 +28,7 @@ interface CreateTodoPRops {
   todoId?: number;
 }
 
-const CreateTodoBox: React.FC<CreateTodoPRops> = ({
+const TodoForm: React.FC<TodoFormProps> = ({
   isCreateTodo,
   setIsOpen,
   reFetch,
@@ -312,4 +312,4 @@ const CreateTodoBox: React.FC<CreateTodoPRops> = ({
   );
 };
 
-export default CreateTodoBox;
+export default TodoForm;

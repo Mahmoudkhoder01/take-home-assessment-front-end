@@ -12,7 +12,7 @@ import completedIcon from "../../ICONS/check-mark.png";
 import flagIcon from "../../ICONS/flag.png";
 
 // import components
-import CreateTodo, { TodoData } from "../../Components/CreateTodo/CreateTodo";
+import TodoForm, { TodoData } from "../../Components/TodoForm/TodoForm";
 import DeleteTodo from "../../Components/DeleteTodo/DeleteTodo";
 
 interface Todo {
@@ -159,7 +159,7 @@ export default function Home() {
         <img src={plusIcon} alt="plus-icon" className={classes.bottomIcon} />
       </div>
       {isCreateTodo && (
-        <CreateTodo
+        <TodoForm
           setIsOpen={setIsOpen}
           isCreateTodo={isCreateTodo}
           reFetch={refetch}
