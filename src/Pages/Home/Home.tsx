@@ -31,7 +31,7 @@ export default function Home() {
 
   const userId = userIdObject && userIdObject.id;
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["user", userId],
     queryFn: () => getUserById(userId),
   });
@@ -75,7 +75,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div style={{ height: "100vh" }}>
       <div className={classes.contentWrapper}>
         {Object.entries(todosByDate).map(([date, todos], index) => (
           <div className={classes.tasksWrapper} key={index}>
@@ -126,7 +126,8 @@ export default function Home() {
       <BackDropBox
         setIsBackdropOpen={setIsBackdropOpen}
         isBackdropOpen={isBackdropOpen}
+        reFetch={refetch}
       />
-    </>
+    </div>
   );
 }

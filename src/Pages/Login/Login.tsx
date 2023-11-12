@@ -87,7 +87,7 @@ export default function Login() {
   };
 
   return (
-    <div className="content">
+    <>
       <Box
         content={
           <>
@@ -108,6 +108,6 @@ export default function Login() {
           </>
         }
       />
-    </div>
+    </>
   );
 }

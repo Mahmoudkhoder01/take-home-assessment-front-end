@@ -1,16 +1,12 @@
-.App {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.content {
+body > #root > div {
   height: 100vh;
+  overflow-y: auto;
+  flex-basis: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.error{
+.error {
   color: red;
 }

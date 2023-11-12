@@ -179,7 +179,7 @@ export default function Register() {
   };
 
   return (
-    <div className="content">
+    <>
       <Box
         content={
           <>
@@ -207,6 +207,6 @@ export default function Register() {
           </>
         }
       />
-    </div>
+    </>
   );
 }

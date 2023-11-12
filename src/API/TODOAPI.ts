@@ -63,3 +63,43 @@ export const createTodo = async (
     }
   }
 };
+
+export interface EditTodoResponse {
+  message: string;
+  data_updated: {
+    id: number;
+    description: string;
+    priority: string;
+    userId: number;
+    date: string;
+    completed: false;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
+
+export interface EditTodoRequest {
+  description: string;
+  priority: string;
+  date: string;
+  completed?: boolean;
+}
+
+export const updateTodo = async (
+  id: number,
+  todo: EditTodoRequest,
+): Promise<EditTodoResponse> => {
+  try {
+    const response = await axios.put<EditTodoResponse>(
+      `${API_URL}todo/${id}`,
+      todo
+    );
+    return response.data;
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.message);
+    } else {
+      throw new Error("Failed to update todo");
+    }
+  }
+};

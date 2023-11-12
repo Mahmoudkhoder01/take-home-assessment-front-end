@@ -5,28 +5,26 @@ import classes from "./BackDropBox.module.css";
 import Button from "../ReusableTools/Button/Button";
 import { createTodo } from "../../API/TODOAPI";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getUserById } from "../../API/USERAPI";
+
+import closeIcon from "../../ICONS/x-mark.png";
 
 interface BackDropBoxProps {
   isBackdropOpen: boolean;
   setIsBackdropOpen: (value: boolean) => void;
-  edit?: boolean;
+  reFetch: () => void;
 }
 
 const BackDroopBox: React.FC<BackDropBoxProps> = ({
   isBackdropOpen,
   setIsBackdropOpen,
+  reFetch,
 }) => {
   const storedUserInfo = localStorage.getItem("userInfo");
 
   const userId = storedUserInfo && JSON.parse(storedUserInfo);
 
   const queryClient = useQueryClient();
-  const {
-    status,
-    error: todoError,
-    mutate,
-  } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: createTodo,
 
     onSuccess: (newTodo) => {
@@ -44,6 +42,8 @@ const BackDroopBox: React.FC<BackDropBoxProps> = ({
         date: "",
         general: "",
       });
+
+      reFetch();
 
       queryClient.setQueryData(["todo", newTodo], newTodo.result);
     },
@@ -173,54 +173,58 @@ const BackDroopBox: React.FC<BackDropBoxProps> = ({
   return (
     <>
       {isBackdropOpen && (
-        <>
-          <div
-            className={classes.backDrop}
+        <div>
+          <img
+            src={closeIcon}
+            alt="close-icon"
+            className={classes.closeIcon}
             onClick={() => setIsBackdropOpen(false)}
-          ></div>
-          <div className={classes.centeredBox}>
-            <Box
-              content={
-                <>
-                  <Input
-                    type="text"
-                    label="Description"
-                    onChange={(e) =>
-                      handleInputChange("description", e.target.value)
-                    }
-                    placeholder="Enter description"
-                    value={data.description}
-                    error={error.description}
-                  />
-                  <div className={classes.inlineInputs}>
-                    <Input
-                      type="text"
-                      label="Date"
-                      onChange={(e) =>
-                        handleInputChange("date", e.target.value)
-                      }
-                      placeholder="YYYY-MM-DD"
-                      value={data.date}
-                      error={error.date}
-                    />
+          />
+          <div className={classes.backDrop}>
+            <>
+              <Box
+                content={
+                  <>
                     <Input
                       type="text"
                       label="Description"
                       onChange={(e) =>
-                        handleInputChange("priority", e.target.value)
+                        handleInputChange("description", e.target.value)
                       }
-                      placeholder="(e.g., HIGH, MEDIUM, LOW)"
-                      value={data.priority}
-                      error={error.priority}
+                      placeholder="Enter description"
+                      value={data.description}
+                      error={error.description}
                     />
-                  </div>
-                  {error.general && <p className="error">{error.general}</p>}
-                  <Button text="Create" onClick={handleSubmit} />
-                </>
-              }
-            />
+                    <div className={classes.inlineInputs}>
+                      <Input
+                        type="text"
+                        label="Date"
+                        onChange={(e) =>
+                          handleInputChange("date", e.target.value)
+                        }
+                        placeholder="YYYY-MM-DD"
+                        value={data.date}
+                        error={error.date}
+                      />
+                      <Input
+                        type="text"
+                        label="Description"
+                        onChange={(e) =>
+                          handleInputChange("priority", e.target.value)
+                        }
+                        placeholder="(e.g., HIGH, MEDIUM, LOW)"
+                        value={data.priority}
+                        error={error.priority}
+                      />
+                    </div>
+                    {error.general && <p className="error">{error.general}</p>}
+                    <Button text="Create" onClick={handleSubmit} />
+                  </>
+                }
+              />
+            </>
           </div>
-        </>
+        </div>
       )}
     </>
   );
