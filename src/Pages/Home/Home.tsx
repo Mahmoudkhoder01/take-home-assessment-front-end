@@ -9,7 +9,7 @@ interface Todo {
   priority: string;
   userId: number;
   date: string;
-  complete: boolean;
+  completed: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -26,6 +26,11 @@ export default function Home() {
 
   if (isLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (!data || !data.result) {
+    // Handle the case where data is missing or doesn't have the expected structure
+    return <div>Data is missing or invalid.</div>;
   }
 
   const today = new Date().toDateString();
@@ -51,6 +56,10 @@ export default function Home() {
 
     todosByDate[dateLabel].push(todo);
   });
+
+  if (Object.keys(todosByDate).length === 0) {
+    return <div>No todos yet.</div>;
+  }
 
   return (
     <div className={classes.contentWrapper}>
