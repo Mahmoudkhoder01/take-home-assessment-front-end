@@ -29,7 +29,11 @@ interface Todo {
 export default function Home() {
   const [isCreateTodo, setIscreateTodo] = useState(false);
 
+  const [isEditTodo, setIsEditTodo] = useState(false);
+
   const [isDeleteTodo, setIsDeleteTodo] = useState(false);
+
+  const [todoData, setTodoData] = useState({});
 
   const [todoId, setTodoId] = useState(0);
 
@@ -78,6 +82,11 @@ export default function Home() {
     todosByDate[dateLabel].push(todo);
   });
 
+  const handleOpenEdit = (todoData: object) => {
+    setIsEditTodo(true);
+    setTodoData(todoData);
+  };
+
   const handleOpenDelete = (id: number) => {
     setIsDeleteTodo(true);
     setTodoId(id);
@@ -113,7 +122,7 @@ export default function Home() {
                               className={`${classes.icon} ${classes.flagIcon}`}
                             />
                             <div className={classes.priorityText}>
-                                {todo.priority}
+                              {todo.priority}
                             </div>
                           </div>
                           <div>
@@ -121,6 +130,7 @@ export default function Home() {
                               src={editIcon}
                               alt="edit-icon"
                               className={`${classes.icon} ${classes.editIcon}`}
+                              onClick={() => handleOpenEdit(todo)}
                             />
                             <img
                               src={deleteIcon}
