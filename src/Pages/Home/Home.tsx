@@ -5,6 +5,9 @@ import { useQuery } from "@tanstack/react-query";
 
 // import icons
 import plusIcon from "../../ICONS/plus.png";
+import editIcon from "../../ICONS/pencil.png";
+import deleteIcon from "../../ICONS/bin.png";
+import completedIcon from "../../ICONS/check-mark.png";
 
 interface Todo {
   id: number;
@@ -75,8 +78,31 @@ export default function Home() {
               <Box
                 key={todoIndex}
                 content={
-                  <div>
+                  <div className={classes.todoWrapper}>
                     <p>{todo.description}</p>
+                    <div>
+                      {todo.completed && (
+                        <div className={classes.topIcon}>
+                          <img
+                            src={completedIcon}
+                            alt="edit-icon"
+                            className={`${classes.icon} ${classes.completedIcon}`}
+                          />
+                        </div>
+                      )}
+                      <div>
+                        <img
+                          src={editIcon}
+                          alt="edit-icon"
+                          className={`${classes.icon} ${classes.editIcon}`}
+                        />
+                        <img
+                          src={deleteIcon}
+                          alt="edit-icon"
+                          className={`${classes.icon} ${classes.deleteIcon}`}
+                        />
+                      </div>
+                    </div>
                   </div>
                 }
                 adjustPadding
@@ -85,8 +111,8 @@ export default function Home() {
           </div>
         ))}
       </div>
-      <div className={classes.iconWrapper}>
-        <img src={plusIcon} alt="plus-icon" className={classes.icon} />
+      <div className={classes.bottomIconWrapper}>
+        <img src={plusIcon} alt="plus-icon" className={classes.bottomIcon} />
       </div>
     </>
   );
