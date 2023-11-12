@@ -9,7 +9,7 @@ import plusIcon from "../../ICONS/plus.png";
 import editIcon from "../../ICONS/pencil.png";
 import deleteIcon from "../../ICONS/bin.png";
 import completedIcon from "../../ICONS/check-mark.png";
-import BackDropBox from "../../Components/BackDropBox/BackDropBox";
+import CreateTodo from "../../Components/CreateTodo/CreateTodo";
 
 interface Todo {
   id: number;
@@ -123,7 +123,7 @@ export default function Home() {
       >
         <img src={plusIcon} alt="plus-icon" className={classes.bottomIcon} />
       </div>
-      <BackDropBox
+      <CreateTodo
         setIsBackdropOpen={setIsBackdropOpen}
         isBackdropOpen={isBackdropOpen}
         reFetch={refetch}

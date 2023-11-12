@@ -87,7 +87,7 @@ export interface EditTodoRequest {
 
 export const updateTodo = async (
   id: number,
-  todo: EditTodoRequest,
+  todo: EditTodoRequest
 ): Promise<EditTodoResponse> => {
   try {
     const response = await axios.put<EditTodoResponse>(
