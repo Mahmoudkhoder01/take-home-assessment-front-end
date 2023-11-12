@@ -1,3 +1,5 @@
+@import url("../../Components/ReusableTools/variables.css");
+
 .tasksWrapper {
   display: flex;
   flex-direction: column;
@@ -7,7 +9,29 @@
   margin: 20px 0;
 }
 
-.contentWrapper{
-    display: flex;
-    flex-direction: column-reverse;
+.contentWrapper {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.iconWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary);
+  border-radius: 50%;
+  padding: 15px;
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  cursor: pointer;
+}
+
+.iconWrapper:hover {
+  background-color: var(--secondary);
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
 }

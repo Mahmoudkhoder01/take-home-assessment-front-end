@@ -3,6 +3,9 @@ import Box from "../../Components/Box/Box";
 import classes from "./Home.module.css";
 import { useQuery } from "@tanstack/react-query";
 
+// import icons
+import plusIcon from "../../ICONS/plus.png";
+
 interface Todo {
   id: number;
   description: string;
@@ -63,23 +66,28 @@ export default function Home() {
   }
 
   return (
-    <div className={classes.contentWrapper}>
-      {Object.entries(todosByDate).map(([date, todos], index) => (
-        <div className={classes.tasksWrapper} key={index}>
-          <div className={classes.date}>{date}</div>
-          {todos.map((todo, todoIndex) => (
-            <Box
-              key={todoIndex}
-              content={
-                <div>
-                  <p>{todo.description}</p>
-                </div>
-              }
-              adjustPadding
-            />
-          ))}
-        </div>
-      ))}
-    </div>
+    <>
+      <div className={classes.contentWrapper}>
+        {Object.entries(todosByDate).map(([date, todos], index) => (
+          <div className={classes.tasksWrapper} key={index}>
+            <div className={classes.date}>{date}</div>
+            {todos.map((todo, todoIndex) => (
+              <Box
+                key={todoIndex}
+                content={
+                  <div>
+                    <p>{todo.description}</p>
+                  </div>
+                }
+                adjustPadding
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+      <div className={classes.iconWrapper}>
+        <img src={plusIcon} alt="plus-icon" className={classes.icon} />
+      </div>
+    </>
   );
 }
