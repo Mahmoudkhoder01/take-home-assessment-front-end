@@ -56,7 +56,8 @@
     brightness(93%) contrast(133%);
 }
 
-.editIcon:hover {
+.editIcon:hover,
+.flagIcon:hover {
   filter: invert(66%) sepia(58%) saturate(6536%) hue-rotate(162deg)
     brightness(96%) contrast(101%);
 }
@@ -70,7 +71,25 @@
   display: flex;
   justify-content: end;
   margin-bottom: 10px;
+  position: relative;
 }
+
+/* When hovering over the flag icon, show the priority text */
+.flagIcon:hover + .priorityText {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.priorityText {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; 
+  position: absolute;
+  background-color: var(--secondary);
+  padding: 5px;
+  left: 110%;
+}
+
 .completedIcon {
   filter: invert(56%) sepia(93%) saturate(2641%) hue-rotate(82deg)
     brightness(118%) contrast(123%);
